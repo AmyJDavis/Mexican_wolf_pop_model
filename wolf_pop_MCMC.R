@@ -253,6 +253,66 @@ wolf.Malth.Pois.sigT.2mort.mcmc<-function(mdat,xm,xr,xp,mortmis=c(0.8,0.2),
   }
   cat("\n")
   
+  ###
+  ### Make plots
+  ###
+  par(family="serif",mar=c(3,4,1,1)+0.1)
+  
+  ###
+  ### Plots for Beta R
+  ###
+  brmin=min(betarsave[,n.burn:n.mcmc])
+  brmax=max(betarsave[,n.burn:n.mcmc])
+  layout(matrix(c(seq(1,2*min(10,dim(betarsave)[1]),by=2),seq(2,2*min(10,dim(betarsave)[1]),by=2),seq(2,2*min(10,dim(betarsave)[1]),by=2)),min(10,dim(betarsave)[1]),3))
+  for(i in 1:dim(betarsave)[1]){
+    plot(betarsave[i,],type="l",main=paste("Trace: beta r ",names(xr)[i]),ylab=paste("N ",i),xlab="MCMC Iteration")
+    plot(density(betarsave[i,n.burn:n.mcmc]),lwd=2,main=paste("Posterior and Prior: beta r ",names(xr)[i]),xlim=c(brmin,brmax))
+    curve(dnorm(x,0,1),col=2,lwd=3,lty=2,add=TRUE)
+    legend("topright",col=c(1,2),lwd=c(2,3),lty=c(1,2),legend=c("Posterior","Prior"),bty='n')
+  }
+  
+  ###
+  ### Plots for Beta M
+  ###
+  bmmin=min(betamsave[,n.burn:n.mcmc])
+  bmmax=max(betamsave[,n.burn:n.mcmc])
+  layout(matrix(c(seq(1,2*min(10,dim(betamsave)[1]),by=2),seq(2,2*min(10,dim(betamsave)[1]),by=2),seq(2,2*min(10,dim(betamsave)[1]),by=2)),min(10,dim(betamsave)[1]),3))
+  for(i in 1:dim(betamsave)[1]){
+    plot(betamsave[i,],type="l",main=paste("Trace: beta m ",names(xm)[i]),ylab=paste("N ",i),xlab="MCMC Iteration")
+    plot(density(betamsave[i,n.burn:n.mcmc]),lwd=2,main=paste("Posterior and Prior: beta m ",names(xm)[i]),xlim=c(bmmin,bmmax))
+    curve(dnorm(x,0,1),col=2,lwd=3,lty=2,add=TRUE)
+    legend("topright",col=c(1,2),lwd=c(2,3),lty=c(1,2),legend=c("Posterior","Prior"),bty='n')
+  }
+  
+  
+  ###
+  ### Plots for Beta p
+  ###
+  bpmin=min(betapsave[,n.burn:n.mcmc])
+  bpmax=max(betapsave[,n.burn:n.mcmc])
+  layout(matrix(c(seq(1,2*min(10,dim(betapsave)[1]),by=2),seq(2,2*min(10,dim(betapsave)[1]),by=2),seq(2,2*min(10,dim(betapsave)[1]),by=2)),min(10,dim(betapsave)[1]),3))
+  for(i in 1:dim(betapsave)[1]){
+    plot(betapsave[i,],type="l",main=paste("Trace: beta p ",names(xm)[i]),ylab=paste("N ",i),xlab="MCMC Iteration")
+    plot(density(betapsave[i,n.burn:n.mcmc]),lwd=2,main=paste("Posterior and Prior: beta p ",names(xm)[i]),xlim=c(bpmin,bpmax))
+    curve(dnorm(x,0,1),col=2,lwd=3,lty=2,add=TRUE)
+    legend("topright",col=c(1,2),lwd=c(2,3),lty=c(1,2),legend=c("Posterior","Prior"),bty='n')
+  }
+  
+  
+  layout(matrix(c(seq(1,2*min(10,6),by=2),seq(2,2*min(10,6),by=2),seq(2,2*min(10,6),by=2)),min(10,6),3))
+  npredmin=min(npredsave)
+  npredmax=max(npredsave)
+  for(i in 1:yrs){
+    plot(npredsave[i,],type="l",main=paste("Trace: npred ",i),ylab="pm ",xlab="MCMC Iteration")
+    plot(density(npredsave[i,n.burn:n.mcmc]),lwd=2,main="Posterior and Prior: npred ",xlim=c(npredmin,npredmax))
+    legend("topright",col=c(1,2),lwd=c(2,3),lty=c(1,2),legend=c("Posterior","Prior"),bty='n')
+  }
+  
+  
+  
+  
+  
+  
   list(npredsave=npredsave,Mtsave=Mtsave,Rtsave=Rtsave,betarsave=betarsave,pmsave=pmsave,poacht=poacht,
        poachratet=poachratet,betamsave=betamsave,betapsave=betapsave)
 }

@@ -35,7 +35,7 @@ To use this code with your own data, you may need to make some changes (includin
 
 ## Model output
 
-The model will output the full posterior data for the following parameters:
+The model will output the full posterior data in a list for the following parameters:
 
 1. npredsave = the abundance estimates per year
 2. Mtsave = the annual mortality rate estimates
@@ -48,7 +48,9 @@ The model will output the full posterior data for the following parameters:
 9. betapsave = the covariate estimates for proportion of mortality from different causes
 
 
-       
+The model produces diagnostic plots for: betas for reproduction rates, betas for mortality rates, betas for mortality proportions, and abundance.  These include trace plots (using all of the data) and posterior distribution plots assuming a burn-in of 50%. 
+ 
+ 
 
 
 
