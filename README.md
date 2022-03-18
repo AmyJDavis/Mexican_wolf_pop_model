@@ -49,6 +49,8 @@ The model will output the full posterior data in a list for the following parame
 
 
 The model produces diagnostic plots for: betas for reproduction rates, betas for mortality rates, betas for mortality proportions, and abundance.  These include trace plots (using all of the data) and posterior distribution plots assuming a burn-in of 50%. 
+
+Lines 39-66 calculate the posterior means and 95% credible intervals of the output data and compile the results into a data frame called "combdat". 
  
  
 

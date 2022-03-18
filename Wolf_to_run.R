@@ -31,6 +31,36 @@ xp=data.frame(Int=1,Depredations=mdat$Depperwolf,Transrate=(mdat$Translocations+
 
 
 ### Code to run MCMC model
-wolf.res.sigT.2mortk=wolf.Malth.Pois.sigT.2mort.mcmc(mdat,xm,xr,xp,mortmis,
+wolf.results=wolf.Malth.Pois.sigT.2mort.mcmc(mdat,xm,xr,xp,mortmis,
                                                      betar.tune,betam.tune,
                                                      betap.tune,n.mcmc)
+
+### Calculating posterior means and confidence intervals
+npredmean=apply(wolf.results$npredsave[,n.burn:n.mcmc],1,function(x).Internal(mean(x)))
+npredci=apply(wolf.results$npredsave[,n.burn:n.mcmc],1,function(x)quantile(x,c(0.025,0.975)))
+
+Rmean=apply(wolf.results$Rtsave[,n.burn:n.mcmc],1,function(x).Internal(mean(x)))
+Rci=apply(wolf.results$Rtsave[,n.burn:n.mcmc],1,function(x)quantile(x,c(0.025,0.975)))
+
+Mmean=apply(wolf.results$Mtsave[,n.burn:n.mcmc],1,function(x).Internal(mean(x)))
+Mci=apply(wolf.results$Mtsave[,n.burn:n.mcmc],1,function(x)quantile(x,c(0.025,0.975)))
+
+pmmean=apply(wolf.results$pmsave[,n.burn:n.mcmc],1,function(x).Internal(mean(x)))
+pmci=apply(wolf.results$pmsave[,n.burn:n.mcmc],1,function(x)quantile(x,c(0.025,0.975)))
+
+if(dim(wolf.results$betamsave)[1]==1){
+  betammean=mean(wolf.results$betamsave[n.burn:n.mcmc])
+  betamci=quantile(wolf.results$betamsave[n.burn:n.mcmc],c(0.025,0.975))
+}else{
+  betammean=apply(wolf.results$betamsave[,n.burn:n.mcmc],1,function(x).Internal(mean(x)))
+  betamci=apply(wolf.results$betamsave[,n.burn:n.mcmc],1,function(x)quantile(x,c(0.025,0.975)))
+}
+
+poachmean=apply(wolf.results$poacht[,n.burn:n.mcmc],1,function(x).Internal(mean(x)))
+poachCI=apply(wolf.results$poacht[,n.burn:n.mcmc],1,function(x)quantile(x,c(0.025,0.975)))
+
+poachratemean=apply(wolf.results$poachratet[,n.burn:n.mcmc],1,function(x).Internal(mean(x)))
+poachrateCI=apply(wolf.results$poachratet[,n.burn:n.mcmc],1,function(x)quantile(x,c(0.025,0.975)))
+
+combdat=cbind(mdat,npredmean,t(npredci),Rmean,t(Rci),Mmean,t(Mci),poachmean,t(poachCI),poachratemean,t(poachrateCI))
+combdat
