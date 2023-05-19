@@ -20,14 +20,15 @@ wolf.Malth.Pois.sigT.2mort.mcmc<-function(mdat,xm,xr,xp,mortmis=c(0.8,0.2),
                                           betap.tune=0.1,n.mcmc){
   
   ### mdat = data frame with the following columns
-  ###      1.  pop = Minimum population size by year (count of wolf population)
-  ###      2.  Reproduction = Number of reproduction events by year
-  ###      3.  PupRecruitment = Minimum pup recruitment number
-  ###      4.  Released = Number of individuals removed by management by year
-  ###      5.  Releases = Number of management released individuals
-  ###      6.  Translocations = Number of management translocations by year
-  ###      7.  mort = Number of deaths from known or legal causes
-  ###      8.  poaching = Number of deaths from illegal causes
+  ###      1.  year = Year of data
+  ###      2.  pop = Minimum population size by year (count of wolf population)
+  ###      3.  Reproduction = Number of reproduction events by year
+  ###      4.  PupRecruitment = Minimum pup recruitment number
+  ###      5.  Removals = Number of individuals removed by management by year
+  ###      6.  Releases = Number of management released individuals
+  ###      7.  Translocations = Number of management translocations by year
+  ###      8.  mort = Number of deaths from known or legal causes
+  ###      9.  poaching = Number of deaths from illegal causes
   
   ###
   ### xm = design matrix for covariates on mortality
