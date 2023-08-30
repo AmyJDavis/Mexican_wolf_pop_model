@@ -24,7 +24,7 @@ The data needed to fit this model are annual wolf population data including:
 
 
 ## Steps to run the code
-The Wolf_to_run.R code runs with the data file at https://doi.org/10.5061/dryad.2280gb5z8. To use your own data, you may need to make some changes (including the ones listed above in the data needs section).  The following steps take you through how to run this code with the data provideds and how modify Wolf_to_run.R to work with your data. This code was created under R version 4.1.2. 
+The Wolf_to_run.R code runs with the data file at https://datadryad.org/stash/dataset/doi:10.5061/dryad.2280gb5z8. To use your own data, you may need to make some changes (including the ones listed above in the data needs section).  The following steps take you through how to run this code with the data provideds and how modify Wolf_to_run.R to work with your data. This code was created under R version 4.1.2. 
 
 1.	Save both R scrips and the data file in the same working directory (or modify the location of the wolf_pop_MCMC.R on Line 12).
 2.	Ensure you have all of the packages loaded on your machine (from both scripts).
