@@ -1,6 +1,6 @@
 # Mexican Wolf Bayesian hierarchical population model
 
-This document provides guidance for the implementation of the Bayesian hierarchical population model associated with "Factors affecting recovery of Mexican wolves in southwestern USA" by Stewart W. Breck, Amy Davis, John K. Oakleaf, David L. Bergman, Jim deVos, J. Paul Greer, and Kim Pepin. In press (July 2023) with Journal of Applied Ecology. Two R scrips are provided and one csv datafile.
+This document provides guidance for the implementation of the Bayesian hierarchical population model associated with "Factors affecting recovery of Mexican wolves in southwestern USA" by Stewart W. Breck, Amy Davis, John K. Oakleaf, David L. Bergman, Jim deVos, J. Paul Greer, and Kim Pepin 2023 with Journal of Applied Ecology. https://doi.org/10.1111/1365-2664.14483. Two R scrips are provided and one csv datafile.
 
 ## Files included:
 
