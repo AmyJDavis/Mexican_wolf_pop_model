@@ -293,8 +293,8 @@ wolf.Malth.Pois.sigT.2mort.mcmc<-function(mdat,xm,xr,xp,mortmis=c(0.8,0.2),
   bpmax=max(betapsave[,n.burn:n.mcmc])
   layout(matrix(c(seq(1,2*min(10,dim(betapsave)[1]),by=2),seq(2,2*min(10,dim(betapsave)[1]),by=2),seq(2,2*min(10,dim(betapsave)[1]),by=2)),min(10,dim(betapsave)[1]),3))
   for(i in 1:dim(betapsave)[1]){
-    plot(betapsave[i,],type="l",main=paste("Trace: beta p ",names(xm)[i]),ylab=paste("N ",i),xlab="MCMC Iteration")
-    plot(density(betapsave[i,n.burn:n.mcmc]),lwd=2,main=paste("Posterior and Prior: beta p ",names(xm)[i]),xlim=c(bpmin,bpmax))
+    plot(betapsave[i,],type="l",main=paste("Trace: beta p ",names(xp)[i]),ylab=paste("N ",i),xlab="MCMC Iteration")
+    plot(density(betapsave[i,n.burn:n.mcmc]),lwd=2,main=paste("Posterior and Prior: beta p ",names(xp)[i]),xlim=c(bpmin,bpmax))
     curve(dnorm(x,0,1),col=2,lwd=3,lty=2,add=TRUE)
     legend("topright",col=c(1,2),lwd=c(2,3),lty=c(1,2),legend=c("Posterior","Prior"),bty='n')
   }
