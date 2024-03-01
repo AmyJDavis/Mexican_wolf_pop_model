@@ -20,7 +20,7 @@ The data needed to fit this model are annual wolf population data including:
 6.  Releases = Number of management released individuals
 7.  Translocations = Number of management translocations by year
 8.  mort = Number of deaths from known or legal causes
-9.  poaching = Number of deaths from illegal causes
+9.  poaching = Number of deaths from illegal causes and cryptic deaths
 
 
 ## Steps to run the code
@@ -28,12 +28,12 @@ The Wolf_to_run.R code runs with the data file at https://datadryad.org/stash/da
 
 1.	Save both R scrips and the data file in the same working directory (or modify the location of the wolf_pop_MCMC.R on Line 12).
 2.	Ensure you have all of the packages loaded on your machine (from both scripts).
-3.  If using your own data, Change the name of your data set on Line 15.
-4.  Set the design matrices for mortality, reproduction, and proportion mortality on Lines 28-30. These can be modified to compare other covariate structures than the one shown here.
-5.  Change the number of MCMC iterations you would like to use (Line 22).
-6.  The tuning parameters may need to be changed to fit your data better (Lines 19-21).
-7.  If the different mortality types have a different probability of going unobserved then change the 'mortmis' vector on Line 24.
-8.  The code to run the MCMC is on Lines 34-36.
+3.  If using your own data, Change the name of your data set on Line 15. Otherwise, process the data on lines 18-24. 
+4.  Set the design matrices for mortality, reproduction, and proportion mortality on Lines 36-38. These can be modified to compare other covariate structures than the one shown here.
+5.  Change the number of MCMC iterations you would like to use (Line 30).
+6.  The tuning parameters may need to be changed to fit your data better (Lines 27-29).
+7.  If the different mortality types have a different probability of going unobserved then change the 'mortmis' vector on Line 32.
+8.  The code to run the MCMC is on Lines 42-44.
 
 ## Model output
 
@@ -52,7 +52,7 @@ The model will output the full posterior data in a list for the following parame
 
 The model produces diagnostic plots for: betas for reproduction rates, betas for mortality rates, betas for mortality proportions, and abundance.  These include trace plots (using all of the data) and posterior distribution plots assuming a burn-in of 50%. 
 
-Lines 39-66 calculate the posterior means and 95% credible intervals of the output data and compile the results into a data frame called "combdat". 
+Lines 47-74 calculate the posterior means and 95% credible intervals of the output data and compile the results into a data frame called "combdat". 
  
  
 

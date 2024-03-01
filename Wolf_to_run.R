@@ -14,12 +14,20 @@ source('wolf_pop_MCMC.R')
 ### Data
 mdat=read.csv("MexWolfDataFile.csv")
 
+## Process data for analysis
+mdat$Count=c(0,mdat$pop[-dim(mdat)[1]])
+mdat$justpoach=mdat$poaching
+mdat$poaching=mdat$poaching+mdat$cryptic
+
+mdat$mort=mdat$poaching+mdat$vehicle+mdat$natural+mdat$otherlegal
+mdat$nadj=mdat$Count+mdat$Released+mdat$Translocations
+mdat$MortNotPoach=mdat$vehicle+mdat$natural+mdat$otherlegal
 
 ### Set up tuning parameters and MCMC iteration size
 betar.tune=0.1
 betam.tune=0.1
 betap.tune=0.1
-n.mcmc=1000000
+n.mcmc=100000
 n.burn=n.mcmc/2
 mortmis=c(0.8,0.2)
 

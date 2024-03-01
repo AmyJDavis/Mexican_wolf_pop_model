@@ -3,16 +3,12 @@
 ### Mexican Wolf hierarchical population model 
 ###    - malthusian growth on counts
 ###    - covariates on reproduction and mortalities
-###  *** formulation with Nt-1=nt-1+St+Rt  ****
+###  *** New formulation with Nt-1=nt-1+St+Rt  ****
 ###    - Poisson connection from mort and recruit vals
 ### October 21, 2018
 ### Amy J Davis
 ###
 ###################################################################################
-
-
-
-
 
 ###
 wolf.Malth.Pois.sigT.2mort.mcmc<-function(mdat,xm,xr,xp,mortmis=c(0.8,0.2),
@@ -28,7 +24,7 @@ wolf.Malth.Pois.sigT.2mort.mcmc<-function(mdat,xm,xr,xp,mortmis=c(0.8,0.2),
   ###      6.  Releases = Number of management released individuals
   ###      7.  Translocations = Number of management translocations by year
   ###      8.  mort = Number of deaths from known or legal causes
-  ###      9.  poaching = Number of deaths from illegal causes
+  ###      9.  poaching = Number of deaths from illegal causes and cryptic
   
   ###
   ### xm = design matrix for covariates on mortality
@@ -41,9 +37,7 @@ wolf.Malth.Pois.sigT.2mort.mcmc<-function(mdat,xm,xr,xp,mortmis=c(0.8,0.2),
   ### betap.tune = tuning parameter for covariates on mortality proportions
   ### n.mcmc = the number of MCMC iteations to run 
   
-  mdat$Count=c(0,mdat$pop[-dim(mdat)[1]])
-  mdat$justpoach=mdat$poaching
-  mdat$poaching=mdat$justpoach+mdat$cryptic
+  
   
   ### libraries
   library(MCMCpack)
@@ -329,13 +323,8 @@ wolf.Malth.Pois.sigT.2mort.mcmc<-function(mdat,xm,xr,xp,mortmis=c(0.8,0.2),
     plot(density(npredsave[i,n.burn:n.mcmc]),lwd=2,main="Posterior and Prior: npred ",xlim=c(npredmin,npredmax))
     legend("topright",col=c(1,2),lwd=c(2,3),lty=c(1,2),legend=c("Posterior","Prior"),bty='n')
   }
-  
-  
-  
-  
-  
+
   
   list(npredsave=npredsave,Mtsave=Mtsave,Rtsave=Rtsave,betarsave=betarsave,pmsave=pmsave,poacht=poacht,
        poachratet=poachratet,betamsave=betamsave,betapsave=betapsave)
 }
-
