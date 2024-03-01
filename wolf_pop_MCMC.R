@@ -160,6 +160,7 @@ wolf.Malth.Pois.sigT.2mort.mcmc<-function(mdat,xm,xr,xp,mortmis=c(0.8,0.2),
                         dpois(mdat$PupRecruitment,Rt,log=TRUE)+dpois(Rstar,Rt,log=TRUE)))
     
     tmp.keep=rtmhration>runif(yrs)
+    tmp.keep[is.na(tmp.keep)]=FALSE
     Rt[tmp.keep]=Rstar[tmp.keep]
     nchange=1+(Rt-Mt-mdat$Removals)/(npred+mdat$Released+mdat$Translocations)
     
