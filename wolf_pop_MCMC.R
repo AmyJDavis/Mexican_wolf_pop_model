@@ -42,7 +42,8 @@ wolf.Malth.Pois.sigT.2mort.mcmc<-function(mdat,xm,xr,xp,mortmis=c(0.8,0.2),
   ### n.mcmc = the number of MCMC iteations to run 
   
   mdat$Count=c(0,mdat$pop[-dim(mdat)[1]])
-  
+  mdat$justpoach=mdat$poaching
+  mdat$poaching=mdat$justpoach+mdat$cryptic
   
   ### libraries
   library(MCMCpack)
@@ -107,7 +108,9 @@ wolf.Malth.Pois.sigT.2mort.mcmc<-function(mdat,xm,xr,xp,mortmis=c(0.8,0.2),
   poacht=matrix(0,yrs,n.mcmc)
   poachratet=matrix(0,yrs,n.mcmc)
   
+  
   pd2save=matrix(0,yrs,n.mcmc)
+  
   
   ### Run MCMC
   for(k in 1:n.mcmc){
@@ -132,6 +135,7 @@ wolf.Malth.Pois.sigT.2mort.mcmc<-function(mdat,xm,xr,xp,mortmis=c(0.8,0.2),
       tmp.keep=mh>runif(1)
       npred[t][tmp.keep]=nt.star[tmp.keep]
     }
+    npred
     
     ### t=T
     nTstar=rpois(1,npred[yrs])
@@ -140,6 +144,7 @@ wolf.Malth.Pois.sigT.2mort.mcmc<-function(mdat,xm,xr,xp,mortmis=c(0.8,0.2),
     mh=exp(mh1-mh2)
     tmp.keep=mh>runif(1)
     npred[yrs][tmp.keep]=nTstar[tmp.keep]
+    npred
     
     ###########################
     ### 
@@ -147,10 +152,10 @@ wolf.Malth.Pois.sigT.2mort.mcmc<-function(mdat,xm,xr,xp,mortmis=c(0.8,0.2),
     ###
     ########################### 
     Rstar=rpois(yrs,Rt)
-    npredt.1=c(mdat$pop[1],npred[-1])
-    
     nchangestar=1+(Rstar-Mt-mdat$Removals)/(npred+mdat$Released+mdat$Translocations)
     nchangestar
+    
+    npredt.1=c(mdat$pop[1],npred[-1])
     
     rtmhration=exp((dpois(npredt.1,(npred+mdat$Translocations+mdat$Released)*nchangestar,log=TRUE)+
                       dpois(Rstar,exp(as.matrix(xr)%*%beta.r),log=TRUE)+
@@ -164,6 +169,8 @@ wolf.Malth.Pois.sigT.2mort.mcmc<-function(mdat,xm,xr,xp,mortmis=c(0.8,0.2),
     Rt[tmp.keep]=Rstar[tmp.keep]
     nchange=1+(Rt-Mt-mdat$Removals)/(npred+mdat$Released+mdat$Translocations)
     
+    
+    
     ###########################
     ### 
     ### Sample from betas for r
@@ -176,12 +183,15 @@ wolf.Malth.Pois.sigT.2mort.mcmc<-function(mdat,xm,xr,xp,mortmis=c(0.8,0.2),
     
     tmp.keep=brration>runif(xrs)
     beta.r[tmp.keep]=beta.rstar[tmp.keep]
+    beta.r
+    
     
     ###########################
     ### 
     ### Sample from Mt  
     ###
     ########################### 
+    
     Mstar=rpois(yrs,Mt)
     
     nchangestar=1+(Rt-Mstar-mdat$Removals)/(npred+mdat$Released+mdat$Translocations)
@@ -194,6 +204,8 @@ wolf.Malth.Pois.sigT.2mort.mcmc<-function(mdat,xm,xr,xp,mortmis=c(0.8,0.2),
     mtmhrtio[is.na(mtmhrtio)]=0
     tmp.keep=mtmhrtio>runif(yrs)
     Mt[tmp.keep]=Mstar[tmp.keep]
+    Mt
+    
     
     ###########################
     ### 
@@ -201,11 +213,14 @@ wolf.Malth.Pois.sigT.2mort.mcmc<-function(mdat,xm,xr,xp,mortmis=c(0.8,0.2),
     ###
     ########################### 
     beta.mstar=rnorm(xms,beta.m,betam.tune)
+    
     bmration=exp((sum(dpois(Mt,exp(as.matrix(xm)%*%beta.mstar),log=TRUE))+dnorm(beta.mstar,0,1,log=TRUE))-
                    (sum(dpois(Mt,exp(as.matrix(xm)%*%beta.m),log=TRUE))+dnorm(beta.m,0,1,log=TRUE)))
     
     tmp.keep=bmration>runif(xms)
     beta.m[tmp.keep]=beta.mstar[tmp.keep]
+    beta.m
+    
     
     ###########################
     ### 
@@ -214,6 +229,7 @@ wolf.Malth.Pois.sigT.2mort.mcmc<-function(mdat,xm,xr,xp,mortmis=c(0.8,0.2),
     ########################### 
     beta.pstar=rnorm(p.levs,beta.p,betap.tune)
     p.star=inv.logit(as.matrix(xp)%*%beta.pstar)
+    
     pmhratio=exp((sum(dbinom(mdat$poaching,mdat$mort,p.star,log=TRUE))+dnorm(beta.pstar,0,1))-
                    (sum(dbinom(mdat$poaching,mdat$mort,p,log=TRUE))+dnorm(beta.p,0,1)))
     
@@ -221,6 +237,7 @@ wolf.Malth.Pois.sigT.2mort.mcmc<-function(mdat,xm,xr,xp,mortmis=c(0.8,0.2),
     beta.p[tmp.keep]=beta.pstar[tmp.keep]
     beta.p
     p=inv.logit(as.matrix(xp)%*%beta.p)
+    
     
     ################################################
     ###
@@ -245,6 +262,8 @@ wolf.Malth.Pois.sigT.2mort.mcmc<-function(mdat,xm,xr,xp,mortmis=c(0.8,0.2),
     msediffsave[k]=mse.npred[k]-mse.n[k]
     msesave[k]=mean((npred-mdat$Count)^2)
     
+    
+    
     ###
     ### Calculate poaching estimate and poaching rate
     ###
@@ -252,6 +271,7 @@ wolf.Malth.Pois.sigT.2mort.mcmc<-function(mdat,xm,xr,xp,mortmis=c(0.8,0.2),
     poacht[,k]=poachest
     
     poachratet[,k]=poachest/npred
+    
   }
   cat("\n")
   
