@@ -17,7 +17,7 @@ mdat=read.csv("MexWolfDataFile.csv")
 ## Process data for analysis
 mdat$Count=c(0,mdat$pop[-dim(mdat)[1]])
 mdat$justpoach=mdat$poaching
-mdat$poaching=mdat$poaching+mdat$cryptic
+mdat$poaching=mdat$poaching+mdat$unknown
 
 mdat$mort=mdat$poaching+mdat$vehicle+mdat$natural+mdat$otherlegal
 mdat$nadj=mdat$Count+mdat$Released+mdat$Translocations
