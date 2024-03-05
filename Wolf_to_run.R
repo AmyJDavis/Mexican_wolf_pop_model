@@ -27,7 +27,7 @@ mdat$MortNotPoach=mdat$vehicle+mdat$natural+mdat$otherlegal
 betar.tune=0.1
 betam.tune=0.1
 betap.tune=0.1
-n.mcmc=100000
+n.mcmc=1000000
 n.burn=n.mcmc/2
 mortmis=c(0.8,0.2)
 
