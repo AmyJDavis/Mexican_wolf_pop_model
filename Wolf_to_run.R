@@ -72,3 +72,30 @@ poachrateCI=apply(wolf.results$poachratet[,n.burn:n.mcmc],1,function(x)quantile(
 
 combdat=cbind(mdat,npredmean,t(npredci),Rmean,t(Rci),Mmean,t(Mci),poachmean,t(poachCI),poachratemean,t(poachrateCI))
 combdat
+
+
+### Calculating rates of interest
+combdat$Poachrate=combdat$poachmean/combdat$nadj
+combdat$Removrate=combdat$Removals/combdat$nadj
+combdat$TRrate=(combdat$Translocations+combdat$Released)/combdat$nadj
+combdat$Releaserate=combdat$Released/combdat$nadj
+combdat$logPoachrate=log(combdat$Poachrate+0.1)
+combdat$logRemrate=log(combdat$Removrate+0.1)
+combdat$Policy=rep(c(0,1),each=11)
+
+### Regression looking at relationship between poaching rate and removal rate 
+### and translocations and removals rate. Relationships shown in Figure 5.
+prtr1=lm(data=combdat,logPoachrate~Removrate+TRrate)
+
+### Repeat of the above lm without the first year. The population is small this year
+###  and the rates are thus larger than in other years. We wanted to see if this
+###  had an undue influence on the results
+prtr1=lm(data=combdat[-1,],logPoachrate~Removrate+TRrate)
+
+
+### Model results for Table 2.
+remlm_null=lm(data=combdat,logRemrate~1)
+remlm_policy=lm(data=combdat,logRemrate~Policy)
+remlm_Release=lm(data=combdat,logRemrate~Releaserate)
+remlm_PolicyRelease=lm(data=combdat,logRemrate~Policy+Releaserate)
+remlm_PolicyByRelease=lm(data=combdat,logRemrate~Policy*Releaserate)

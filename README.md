@@ -54,6 +54,10 @@ The model produces diagnostic plots for: betas for reproduction rates, betas for
 
 Lines 47-74 calculate the posterior means and 95% credible intervals of the output data and compile the results into a data frame called "combdat". 
  
+
+Lines 78-84 show transformations to rates for post-hoc analyses.
+
+Lines 86-101 are the post-hoc linear regressions that were used in the manuscript. 
  
 
 
