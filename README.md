@@ -20,7 +20,7 @@ The data needed to fit this model are annual wolf population data including:
 6.  Releases = Number of management released individuals
 7.  Translocations = Number of management translocations by year
 8.  mort = Number of deaths from known or legal causes
-9.  poaching = Number of deaths from illegal causes and cryptic deaths
+9.  poaching = Number of known deaths from illegal or unknown causes
 
 
 ## Steps to run the code
